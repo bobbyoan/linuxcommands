@@ -1,0 +1,249 @@
+
+=====Fundamentals=====
+
+cd - change directory
+ls - list content
+pwd - print working directory
+touch - creates a new file
+clear - clears the screen
+exit - exits out of the shell
+script [logname] - saves all your shell activity in a log file
+history - shows commands that were executed; -c clears history
+cp - copies a file / directory
+vi - opens Vi text editor; also creates a new file
+rm - removes a file
+rm -r - removes a directory
+rmdir - removes a directory
+mv - moves a file / renames a file
+mkdir - creates a new directory
+find - finds files in filesystem
+locate - locates files in filesystem using a database of stored locations (It is a best practice to execute updatedb before running this command)
+updatedb - updates the db where locate stores the file locations
+ln - hard link (creates a "shortcut" to the file contents on the hard drive)
+ln - s - soft link (creates a shortcut to the file location)
+chmod - modifies permissions of files (can be used -ugo rwx or with octal notation)
+chmod [ugo] + s - assign special permissions at u/g/o level; to remove -s; run a program with the effective user/group id of the owner instead of the executor
+chmod +t - add sticky bit; only root user can delete the file
+chown - changes the owner of the file
+chgrp - changes the group of the file
+host - displays information about site IP address and MX record
+whatis [command] - short description of the command
+[command] --help - longer description of the command
+man [command] - full description of the command
+tee - outputs on screen and in file
+tee -a - appends text to an existing file
+cat - displays the content of a file
+more - displays content of a file page by page
+less - displays content of a file page by page, but you can navigate up and down
+head - displays first x lines from a file, where x is a number specified after the command
+tail - displays	last x	lines from a file, where x is a	number specified after the command
+tail -f [file] shows latest lines from the file, also updating the output as the file gets modified 
+cut - displays filtered content based on -c - characters -b - bytes -d - delimiter
+awk - displays filtered content based on columns
+grep - filters text based on ONE parameter ; -w - searches for the EXACT match
+egrep - filters text based on multiple parameters
+wc - word count (-l -> no of lines; -c -> no of bytes; -m -> no of characters; -w -> no of words)
+diff - compares two files line by line
+cmp - compares two files byte by byte
+tar cvf - compresses file using tar
+tar xvf - extracts tarred file
+gzip [filename] - compresses file using gzip
+gzip -d / gunzip - extracts gzipped file
+truncate -s [no of bytes] - truncates the file to the specified value
+
+
+=====Access Control List=====
+
+1) setfacl -m u:user:rwx /path/to/file - add permission for user
+2) setfacl -m g:group:rwx /path/to/file - add permission for group
+3) setfacl -Rm "entry" /path/to/file - allow all files or directories to inherit ACL entries from the directory it is within
+4) setfacl -x u:user /path/to/file - remove a specific entry
+5) setfacl -b path/to/file - remove all entries
+6) getfacl - gets ACL info on file
+
+=====System Administration=====
+
+vi - openes Vi text editor
+	i - insert
+	Esc - escapes any mode
+	r - replace
+	d - delete entire line
+	dd - deletes entire line + space between other lines
+	u - undo
+	x - delete char by char
+	o - new line + insert mode
+	:q! - quits without saving
+	:wq! - quit and save
+	/ - search
+sed - text manipulation tool; -i -> makes the changes permanent
+	's/[text_to_be_replaced]/[new_text]/g' [filename] - substitutes text
+	's/[text_to_be_deleted]//g' [filename] - removes text
+	'/[text_to_be_deleted]/d' [filename] - deletes the line containing text_to_be_deleted
+	'/^$/d' [filename] - deletes empty lines
+	'1d' [filename] - deletes the first line
+	'1,2d' [filename] - deletes first two lines
+	's/\t/ /g' - replaces Tabs with Spaces
+	-n [starting line],[finishing line]p [filename] - shows lines from the interval selected
+	[starting line],[finishing line]d [filename] - shows all lines except of the interval selected
+	G - adds empty lines between each line of text
+	'[exception!]s/[text_to_be_replaced]/[new_text]/g' - replaces text except the exception defined
+users - shows users that are logged in the system
+wall - broadcast messages to all logged users; insert text then Ctrl + D
+write [username] - broadcast message to a specific user 
+date - shows the date 
+uptime - how long since the system booted up
+hostname - shows the hostname of the machine
+uname -a - prints the name, version and other details about the current machine and the OS running on it.
+which - location of the command that you run
+cal - calendar - cal [month][year] / cal [year]
+bc - calculator
+systemctl start|stop|restart|reload|status|enable|disable - services
+systemctl list-units --all - shows all services available
+ps - process status; displays all the proceses currently running in the shell
+ps -e - shows all running processes
+ps aux - shows all running processes in BSD format
+ps -ef - shows all running processes in full format listing 
+ps -u [username] - shows all running processes by the specified user
+top - Linux Task Manager
+top -u [username] - shows running processes / user
+top + C key - shows absolute path of the running processes
+top + K key - kills a process by introducing PID in the prompt
+top + M + P - sort processes by RAM usage
+kill - l - get a list of all signal names or signal number
+kill [PID] - kill a process with default signal 
+kill -1 [PID] - restart
+kill -2 [PID] - interrupt from the keyboard just like Ctrl + C
+kill -9 [PID] - forcefully kill the process
+kill -15 [PID] - kill a process gracefully
+shutdown - shuts down the Linux Machine
+init 0-6 - 
+reboot - reboots the Linux Machine
+halt - force shutdown the Linux Machine without considering other running processes
+hostname - displays the hostname of the Linux Machine
+hostnamectl - displays Linux Machine information
+hostnamectl set-hostname [hostname] - changes the hostname of the Linux Machine 
+uname -a - displays kernel version, date/time, CPU arch, OS
+dmidecode - information about the Linux Machine (equivalent with systeminfo in Windows)
+arch - displays system architecture (x86 / x64 / arm etc)
+sos report - generates a report to be sent to RH for diagnostics
+
+
+=====User Account Management=====
+
+useradd [username] - adds a new user
+groupadd [groupname] - adds a new group
+userdel [username] - deletes a user; -r - deletes the home/[username] folder
+groupdel [groupname] - deletes a group
+usermod [username] - modifies a user
+useradd -g [groupname] -s /bin/bash -c [description] -m -d /home/[username] [username] - complete command for adding a user
+chage [-m mindays] [-M maxdays] [-d lastday] [-I inactive] [-E expiredate] [-W warndays] [username] - change password aging for a specific user
+usermod -aG wheel [username] - add user to wheel group meaning providing root access for that user
+who - shows who is logged in at that moment
+last - shows all users that have logged in that system since the beginning
+w - more detail than who
+pinky - print user information
+id [username] - identifies if the user exists
+
+=====Crontab=====
+
+crontab  - [-e edit] [-l list] [-r remove] [crond - cron daemon]
+[minute (0 - 59)] [hour (0 - 23)] [day of the month (1-31)] [month (1-12)] [day of the week (0 - 6)] <command to execute> - crontab table columns
+at - program a task to run only once
+at HH:MM AM/PM - schedules commands to run just once
+at 2:45 AM 101621 - schedule a job for 16th October 2021
+at 4PM + 4 days - schedule a job at 4pm four days from now
+at now + 5 hours - schedule a job 5 hours from now
+at 8:00 AM Sun - schedule a job to 8AM on coming Sunday
+at 10:00AM next month - schedule a job to 10AM next month
+atq - displays all at entries
+atrm # - removes an at entry based on the number added
+atd - at daemon
+
+=====Process Management=====
+
+Ctrl + Z - pauses / stops a running process
+jobs - shows all processes running or paused in the bash shell
+bg - starts the process in the background
+fg - brings back the process to the foreground
+nohup [command] & - executes a command in the background without being attached to the shell (meaning it will continue to work even if you close the terminal)
+nohup [command] > /dev/null 2>&1 & - just like above, but without showing details on screen
+nice -n [value: -20 -> 19] [command] - prioritizes the execution of the command; -20 - highest priority; 19 - lowest priority
+
+=====System Monitoring=====
+
+top - Linux Task Manager
+df - shows available space (common usage: df -h | sort -r)
+du - shows used space (common usage: du -sh * | sort -hr)
+dmesg - displays boot information and error messages 
+iostat 1 - displays usage information on CPU and storage devices
+netstat - displays network information (-rnv)
+free - displays available and used RAM and Swap memory
+
+=====Custom=====
+
+strace -e open [command] - shows what file is accessed when executing a command
+su - switch user (to change user to root run su -)
+rpm -qa [packet name] - queries installed package 
+find / -perm /6000 -type f - finds all executables in Linux with setuid and setgid permissions
+
+
+=====Files=====
+
+/etc/passwd - stores password info
+/etc/group - stores group info
+/etc/shadow - stores stores hashed passwords
+/etc/login.defs - change password aging settings for all users that are created
+/etc/cron.____(directory) [hourly, daily, weekly, monthly]
+/etc/anacrontab - the timing for each cron job except daily
+/etc/cron.d/0hourly - the timing for the daily cron jobs
+/proc/cpuinfo - information about CPU
+/proc/meminfo - information about RAM
+/etc/[OS]-release - shows information about Linux Distro installed
+
+
+=====Logs=====
+
+/var/log - log directory
+boot - boot info
+chronyd - an implementation of NTP (Network Time Protocol)
+cron - cron execution
+maillog - mail logs
+secure - saves info about users login
+messages - stores all information about hardware, software, applications 
+httpd - Apache Web Server logs
+
+
+=====Environment Variables=====
+
+printenv / env - displays all environment variables
+echo $[ENVVAR] - displays ONE environment variable
+export [ENVVAR]=[value] - set the environment variable
+vi .bashrc - to set the environment variable permanently ([ENVVAR]=[value]; export [ENVVAR])
+vi /etc/profile or /etc/bashrc - to globally set the environment variable permanently ([ENVVAR]=[value]; export [ENVVAR])
+
+
+=====Terminal Control Keys=====
+
+Ctrl + U - erases everything you typed on the command line
+Ctrl + C - stops / kills a command
+Ctrl + Z - suspend a command
+Ctrl + D - exit from an interactive program (signals end of data)
+
+=====Add a service under systemctl management=====
+
+Create a unit file in /etc/systemd/system/servicename.service
+
+=====Change ROOT Password=====
+
+01) Reboot
+02) Press e when the OS and rescue partitions are shown
+03a) Replace ro with rw init=/sysroot/bin/sh after root=/dev/mapper/[OS]-root - RHEL v8 and below
+03b) Add rd.break at the end of linux ($root) - RHEL v9
+04) Ctrl + X
+05) chroot /sysroot
+06) mount -o remount,rw /
+07) passwd root
+08) touch /.autorelabel
+09) exit
+10) reboot
+
