@@ -126,7 +126,7 @@ uname -a - displays kernel version, date/time, CPU arch, OS
 dmidecode - information about the Linux Machine (equivalent with systeminfo in Windows)
 arch - displays system architecture (x86 / x64 / arm etc)
 sos report - generates a report to be sent to RH for diagnostics
-
+echo $0 - shows the shell
 
 =====User Account Management=====
 
@@ -189,7 +189,7 @@ find / -perm /6000 -type f - finds all executables in Linux with setuid and setg
 
 =====Files=====
 
-/etc/passwd - stores password info
+/etc/passwd - stores password info and shell information
 /etc/group - stores group info
 /etc/shadow - stores stores hashed passwords
 /etc/login.defs - change password aging settings for all users that are created
@@ -199,7 +199,7 @@ find / -perm /6000 -type f - finds all executables in Linux with setuid and setg
 /proc/cpuinfo - information about CPU
 /proc/meminfo - information about RAM
 /etc/[OS]-release - shows information about Linux Distro installed
-
+/etc/shells - shows available shells
 
 =====Logs=====
 
