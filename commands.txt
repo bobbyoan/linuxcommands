@@ -236,7 +236,7 @@ echo - outputs text to the terminal
 755 - permisions for the script files
 a= - this is how to define variables
 $a - this is how to output variables
-read - reads user input
+read [variable] - reads user input and stores it in the variable
 
 ===If Statement===
 
