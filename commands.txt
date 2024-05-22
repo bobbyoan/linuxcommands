@@ -100,6 +100,7 @@ cal - calendar - cal [month][year] / cal [year]
 bc - calculator
 systemctl start|stop|restart|reload|status|enable|disable - services
 systemctl list-units --all - shows all services available
+systemctl set-default [new target] - sets the system run level in newer versions of Linux 
 ps - process status; displays all the proceses currently running in the shell
 ps -e - shows all running processes
 ps aux - shows all running processes in BSD format
@@ -118,7 +119,7 @@ kill -2 [PID] - interrupt from the keyboard just like Ctrl + C
 kill -9 [PID] - forcefully kill the process
 kill -15 [PID] - kill a process gracefully
 shutdown - shuts down the Linux Machine
-init 0-6 - 
+init 0-6 - system runlevels
 reboot - reboots the Linux Machine
 halt - force shutdown the Linux Machine without considering other running processes
 hostname - displays the hostname of the Linux Machine
@@ -143,6 +144,7 @@ useradd -g [groupname] -s /bin/bash -c [description] -m -d /home/[username] [use
 chage [-m mindays] [-M maxdays] [-d lastday] [-I inactive] [-E expiredate] [-W warndays] [username] - change password aging for a specific user
 usermod -aG wheel [username] - add user to wheel group meaning providing root access for that user
 who - shows who is logged in at that moment
+who -r - shows which run level you are currently in
 last - shows all users that have logged in that system since the beginning
 w - more detail than who
 pinky - print user information
@@ -183,6 +185,16 @@ iostat 1 - displays usage information on CPU and storage devices
 netstat - displays network information (-rnv)
 free - displays available and used RAM and Swap memory
 
+=====System Run Levels=====
+
+init 0 - shutdown or halt the system
+init 1 - single user mode; usually aliased with s or S
+init 2 - multiuser mode without networking
+init 3 - multiuser mode with networking
+init 4 - not defined
+init 5 - multiuser mode with networking and GUI
+init 6 - reboot the system
+
 =====Custom=====
 
 strace -e open [command] - shows what file is accessed when executing a command
@@ -190,6 +202,14 @@ su - switch user (to change user to root run su -)
 rpm -qa [packet name] - queries installed package 
 find / -perm /6000 -type f - finds all executables in Linux with setuid and setgid permissions
 
+=====Linux Boot Process=====
+
+BIOS - Basic Input / Output System executes MBR
+MBR - Master Boot Record executes GRUB
+GRUB - Grand Unified Bootloader executes Kernel
+Kernel - executes /sbin/init
+Init - executes runlevel programs
+Runlevel - runlevel programs are executed from /etc/rc.d/rc*.d/
 
 =====Files=====
 
@@ -206,7 +226,7 @@ find / -perm /6000 -type f - finds all executables in Linux with setuid and setg
 /etc/shells - shows available shells
 /home/user/.bashrc - user level aliases
 /etc/bashrc - global level aliases
-
+/etc/inittab - modifies run-level
 
 =====Logs=====
 
