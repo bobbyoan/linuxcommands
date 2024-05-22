@@ -265,6 +265,23 @@ done
 
 ===End of While Loop===
 
+===Case Statement===
+
+case <variable> in
+    <pattern1>)
+        # commands for pattern1
+        ;;
+    <pattern2>)
+        # commands for pattern2
+        ;;
+    ...
+    *)
+        # default commands
+        ;;
+esac
+
+===End of Case Statement===
+
 ===Functions===
 greet(){
 	echo "Hello, $1!"
