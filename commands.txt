@@ -50,7 +50,8 @@ tar xvf - extracts tarred file
 gzip [filename] - compresses file using gzip
 gzip -d / gunzip - extracts gzipped file
 truncate -s [no of bytes] - truncates the file to the specified value
-
+alias - create shortcut for longer commands
+unalias [alias name] - removes the alias
 
 =====Access Control List=====
 
@@ -106,6 +107,7 @@ ps -ef - shows all running processes in full format listing
 ps -u [username] - shows all running processes by the specified user
 top - Linux Task Manager
 top -u [username] - shows running processes / user
+top -d [seconds] - delays the top refresh by the no of seconds inserted
 top + C key - shows absolute path of the running processes
 top + K key - kills a process by introducing PID in the prompt
 top + M + P - sort processes by RAM usage
@@ -127,6 +129,8 @@ dmidecode - information about the Linux Machine (equivalent with systeminfo in W
 arch - displays system architecture (x86 / x64 / arm etc)
 sos report - generates a report to be sent to RH for diagnostics
 echo $0 - shows the shell
+&> /dev/null - does not show the output on screen
+
 
 =====User Account Management=====
 
@@ -200,6 +204,9 @@ find / -perm /6000 -type f - finds all executables in Linux with setuid and setg
 /proc/meminfo - information about RAM
 /etc/[OS]-release - shows information about Linux Distro installed
 /etc/shells - shows available shells
+/home/user/.bashrc - user level aliases
+/etc/bashrc - global level aliases
+
 
 =====Logs=====
 
