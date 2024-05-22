@@ -100,6 +100,7 @@ cal - calendar - cal [month][year] / cal [year]
 bc - calculator
 systemctl start|stop|restart|reload|status|enable|disable - services
 systemctl list-units --all - shows all services available
+systemctl get-default - shows the current run level
 systemctl set-default [new target] - sets the system run level in newer versions of Linux 
 ps - process status; displays all the proceses currently running in the shell
 ps -e - shows all running processes
