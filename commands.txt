@@ -186,6 +186,11 @@ iostat 1 - displays usage information on CPU and storage devices
 netstat - displays network information (-rnv)
 free - displays available and used RAM and Swap memory
 
+=====Disk Management=====
+
+df - outputs the amount of available disk space (-h - human readable; -i - inodes; -t [type] - displays the partitions of [type] type
+fdisk -l - shows info about the partitions available
+
 =====System Run Levels=====
 
 init 0 - shutdown or halt the system
@@ -203,7 +208,7 @@ su - switch user (to change user to root run su -)
 rpm -qa [packet name] - queries installed package 
 find / -perm /6000 -type f - finds all executables in Linux with setuid and setgid permissions
 
-=====Linux Boot Process=====
+=====Linux Boot Process -old- before CentOS/RedHat7 =====
 
 BIOS - Basic Input / Output System executes MBR
 MBR - Master Boot Record executes GRUB
@@ -211,6 +216,21 @@ GRUB - Grand Unified Bootloader executes Kernel
 Kernel - executes /sbin/init
 Init - executes runlevel programs
 Runlevel - runlevel programs are executed from /etc/rc.d/rc*.d/
+
+=====Linux Boot Process -new- =====
+
+BIOS -> POST (Power On Self Test)
+MBR - saved in the first sector of the HDD - stores location of the GRUB2
+GRUB2 - loads the Kernel (/boot/grub2/grub.cfg)
+Kernel - loads the drivers from initrd.img - starts the first system process (systemd)
+systemd - system daemon (PID 1) - reads (/etc/systemd/system/default.target) to bring the system to run-level (7 run-levels - 0-6)
+
+=====Customize MOTD=====
+
+1) Create new file in /etc/profile.d/motd.sh
+2) Add desired commands in mothd.sh file
+3) Modify the /etc/ssh/sshd_config file (#PrintMotd yes -> PrintMotd no)
+4) Restart sshd.service
 
 =====Files=====
 
@@ -228,6 +248,8 @@ Runlevel - runlevel programs are executed from /etc/rc.d/rc*.d/
 /home/user/.bashrc - user level aliases
 /etc/bashrc - global level aliases
 /etc/inittab - modifies run-level
+/etc/motd - message of the day
+
 
 =====Logs=====
 
