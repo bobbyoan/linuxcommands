@@ -190,6 +190,33 @@ free - displays available and used RAM and Swap memory
 
 df - outputs the amount of available disk space (-h - human readable; -i - inodes; -t [type] - displays the partitions of [type] type
 fdisk -l - shows info about the partitions available
+fdisk [/dev/sd[x]] - starts the fdisk utility for partitioning
+	help - to see all available options
+	n - new partition
+	w - write modifications to partition table
+	t - changes partition's system ID
+mkfs.xfs - sets the filesystem to xfs
+mount [/dev/sd[x]] /[folder_name]
+vi /etc/fstab -> [/dev/sd[x]]	/[folder_name]	xfs	defaults	0	0 - set persistent mounting point
+umount [folder_name] - unmount partition
+mount -a - checks fstab and mounts all partitions that are written there
+pvcreate [/dev/sd[x]] - creates a physical volume
+pvdisplay - shows all physical volumes (pvs - shorted version)
+vgcreate [name] [/dev/sd[x]] - creates a volume group
+vgdisplay [name] - information about the volume group
+vgextend [name] [partition_that_extends_vg] - extends the volume group
+lvcreate -n [name] --size [size_of_pv] [vg_name]
+lvdisplay - displays logical volumes
+lvextend -L+[size] [lv_path]
+mkfs.xfs [vg_name]/[lv_name]
+mount [vg_name]/[lv_name] /[folder_name_to_mount]
+xfs_growfs [lv_path] - extends the filesystem
+
+
+
+
+
+
 
 =====System Run Levels=====
 
