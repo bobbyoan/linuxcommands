@@ -189,6 +189,7 @@ free - displays available and used RAM and Swap memory
 =====Disk Management=====
 
 df - outputs the amount of available disk space (-h - human readable; -i - inodes; -t [type] - displays the partitions of [type] type
+cfdisk - fdisk with GUI - partition manager
 fdisk -l - shows info about the partitions available
 fdisk [/dev/sd[x]] - starts the fdisk utility for partitioning
 	help - to see all available options
@@ -211,12 +212,16 @@ lvextend -L+[size] [lv_path]
 mkfs.xfs [vg_name]/[lv_name]
 mount [vg_name]/[lv_name] /[folder_name_to_mount]
 xfs_growfs [lv_path] - extends the filesystem
+free -m - display amount of free memory
 
+===Create Swap Partition===
 
-
-
-
-
+dd if=/dev/zero of=/[name_of_new_swap] bs=1M count=1024 - allocates space for new swap partition
+chmod go-r [name_of_new_swap] - remove read permissions for group and others 
+mkswap /[name_of_new_swap] - create swap partition
+swapon /[name_of_new_swap] - extends the swap memory
+swapoff /[name_of_new_swap] - removes the added swap
+/etc/fstab - /[name_of_new_swap]	swap	swap	defaults	0	0
 
 =====System Run Levels=====
 
