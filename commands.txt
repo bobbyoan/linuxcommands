@@ -188,7 +188,7 @@ free - displays available and used RAM and Swap memory
 
 =====Disk Management=====
 
-df - outputs the amount of available disk space (-h - human readable; -i - inodes; -t [type] - displays the partitions of [type] type
+df - outputs the amount of available disk space (-h - human readable; -i - inodes; -t [type] - displays the partitions of [type] type; -T - displays all partitions and their filesystem
 cfdisk - fdisk with GUI - partition manager
 fdisk -l - shows info about the partitions available
 fdisk [/dev/sd[x]] - starts the fdisk utility for partitioning
@@ -213,6 +213,19 @@ mkfs.xfs [vg_name]/[lv_name]
 mount [vg_name]/[lv_name] /[folder_name_to_mount]
 xfs_growfs [lv_path] - extends the filesystem
 free -m - display amount of free memory
+fsck - for ext2, ext3, ext4 - check and repair utility; should be executed on an unmounted filesystem; -f - to force check filesystem; -y - to auto fix issues
+xfs_repair - for xfs filesystem - check and repair utility
+
+===fsck Exit Codes===
+
+0 - no errors
+1 - filesystem eroors corrected
+2 - system should be rebooted
+4 - filesystem errors left uncorrected
+8 - operational errors
+16 - usage or syntax error
+32 - fsck canceled by user request
+128 - shared library error
 
 ===Create Swap Partition===
 
@@ -222,6 +235,26 @@ mkswap /[name_of_new_swap] - create swap partition
 swapon /[name_of_new_swap] - extends the swap memory
 swapoff /[name_of_new_swap] - removes the added swap
 /etc/fstab - /[name_of_new_swap]	swap	swap	defaults	0	0
+
+===Advanced Storage Using Stratis===
+yum/dnf install stratis-cli stratisd
+systemctl enable stratisd - enable Stratis Daemon
+systemctl start stratisd - starts the Stratis Daemon
+lsblk - list block disks
+stratis pool create pool 1 /dev/sd[x] - create a new Stratis pool
+stratis pool list - verify the Stratis pool created
+stratis pool add-data pool1 /dev/sd[y] - extend the pool
+stratis pool list - verify the extended pool
+stratis filesystem create pool1 fs1 - create a new filesystem using Stratis
+stratis filesystem list - verify the filesystem
+mkdir /bigdata - create a directory for mount point
+mount /dev/stratis/pool1/fs1 /bigdata - mount the filesystem to the bigdata file
+stratis filesystem snapshot pool1 fs1 [snapshot_name] - create a snapshot
+UUID="[UUID_Code]" /bigdata xfs defaults,x-systemd.requires=stratisd.service	0	0 - add entry to /etc/fstab to mount at boot
+
+
+
+
 
 =====System Run Levels=====
 
