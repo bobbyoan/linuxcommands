@@ -175,6 +175,15 @@ fg - brings back the process to the foreground
 nohup [command] & - executes a command in the background without being attached to the shell (meaning it will continue to work even if you close the terminal)
 nohup [command] > /dev/null 2>&1 & - just like above, but without showing details on screen
 nice -n [value: -20 -> 19] [command] - prioritizes the execution of the command; -20 - highest priority; 19 - lowest priority
+perf - performance statistics
+perf stat -p [PID] - performance statistics for a specific process ID
+perf top - provides a real-time top-like interface showing the most CPU-consuming functions
+perf trace -p [PID] - traces syscalls for the process with PID
+perf list - displays a list of events that can be monitored
+sysctl - view, set and manage kernel parameters
+sysctl -a - displays all kernel parameters
+sysctl -w [parameter_name]=[value] - temporarily modifies a parameter
+sysctl -p - makes the modifications persistent
 
 =====System Monitoring=====
 
@@ -215,6 +224,8 @@ xfs_growfs [lv_path] - extends the filesystem
 free -m - display amount of free memory
 fsck - for ext2, ext3, ext4 - check and repair utility; should be executed on an unmounted filesystem; -f - to force check filesystem; -y - to auto fix issues
 xfs_repair - for xfs filesystem - check and repair utility
+dd if=[source_path] of=[destination_path] - backup drives / partitions
+dd if=[/root/sd[x]1.img] of=/dev/sd[y] - restore from backup
 
 ===fsck Exit Codes===
 
@@ -251,10 +262,6 @@ mkdir /bigdata - create a directory for mount point
 mount /dev/stratis/pool1/fs1 /bigdata - mount the filesystem to the bigdata file
 stratis filesystem snapshot pool1 fs1 [snapshot_name] - create a snapshot
 UUID="[UUID_Code]" /bigdata xfs defaults,x-systemd.requires=stratisd.service	0	0 - add entry to /etc/fstab to mount at boot
-
-
-
-
 
 =====System Run Levels=====
 
@@ -335,7 +342,7 @@ echo $[ENVVAR] - displays ONE environment variable
 export [ENVVAR]=[value] - set the environment variable
 vi .bashrc - to set the environment variable permanently ([ENVVAR]=[value]; export [ENVVAR])
 vi /etc/profile or /etc/bashrc - to globally set the environment variable permanently ([ENVVAR]=[value]; export [ENVVAR])
-
+HISTCONTROL - history recording; ignorespace - doesn't save command if there is a space before the command; ignoredups - doesn't record duplicates; ignoreboth - ignorespace & ignoredups
 
 =====Terminal Control Keys=====
 
@@ -477,4 +484,75 @@ Create a unit file in /etc/systemd/system/servicename.service
 08) touch /.autorelabel
 09) exit
 10) reboot
+
+=====Fork Bomb Fix=====
+
+ulimit -u / ulimit -a
+ulimit -S -u 5000
+
+=====Samba Install and Configuration=====
+
+1) Install Samba packages
+dnf install samba, samba-client, samba-common
+
+2) Enable Samba service through firewall
+firewall-cmd --add-service=samba
+firewall-cmd --reload
+
+3) Create Samba share directory and assign permissions
+mkdir -p [folder_name]
+chmod a+rwx / 777 [folder_name]
+chown -R nobody:nobody [folder_name]
+
+4) Disable SELinux
+
+sestatus - check if SELINUX is enabled
+nano /etc/selinux/config
+SELINUX=enforcing -> SELINUX=disabled
+reboot
+
+5) Modify Samba config file
+
+cp /etc/samba/smb.conf /etc/samba/smb.conf.bk
+Delete everything from the file
+Add the following parameters:
+
+[global]
+	workgroup = WORKGROUP
+	netbios name = redhat
+	security = user
+	map to guest = bad user
+	dns proxy = no
+
+[Anonymous]
+	path = [folder_path]
+	browsable = yes
+	writable = yes
+	guest ok = yes
+	guest only = yes
+	read only = no
+
+Verify config file using testparm commmand
+
+6) Enable and Start the services
+
+systemctl enable / start smb
+systemctl enable / start nmb
+
+7) Mount on Windows Client
+
+Go to Start
+Type [Server_IP]/[shared_folder_path]
+
+8) Mount on Linux Client
+
+Install utilities
+dnf install cifs-utils samba-client
+
+Create a mount point directory
+mkdir mnt/[mount_dir_name]
+
+Mount the Samba share
+mount -t cifs //[Server_IP]/Anonymous /mnt/[mount_dir_name]
+
 
