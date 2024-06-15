@@ -47,11 +47,16 @@ diff - compares two files line by line
 cmp - compares two files byte by byte
 tar cvf - compresses file using tar
 tar xvf - extracts tarred file
+tar czvf - compresses file using gzip
+tar xzvf - extracts gzip file
 gzip [filename] - compresses file using gzip
 gzip -d / gunzip - extracts gzipped file
 truncate -s [no of bytes] - truncates the file to the specified value
 alias - create shortcut for longer commands
 unalias [alias name] - removes the alias
+pushd - adds directories to the directory stack 
+popd - removes directories from the directory stack
+
 
 =====Access Control List=====
 
@@ -132,7 +137,9 @@ arch - displays system architecture (x86 / x64 / arm etc)
 sos report - generates a report to be sent to RH for diagnostics
 echo $0 - shows the shell
 &> /dev/null - does not show the output on screen
-
+mpstat - shows CPU usage; 
+mpstat -P ALL - command to display detailed statistics about each individual CPU or processor core present in the system
+sar -u - used to display CPU utilization statistics collected by the System Activity Reportershows CPU usage	for all	cores
 
 =====User Account Management=====
 
@@ -321,6 +328,11 @@ systemd - system daemon (PID 1) - reads (/etc/systemd/system/default.target) to 
 /etc/bashrc - global level aliases
 /etc/inittab - modifies run-level
 /etc/motd - message of the day
+/etc/nsswitch.conf - nameserver setting
+/etc/hostname - hostname
+/etc/sysconfig/network
+/etc/sysconfig/network-scripts/ifcfg-nic
+/etc/resolv.conf
 
 
 =====Logs=====
@@ -467,6 +479,24 @@ Use spaces: Ensure spaces around the brackets and operators for correct parsing.
 
 =====End of Scripting=====
 
+=====Networking=====
+
+ping - sends a series of packages to test connectivity to a specified host
+ifconfig - utility to display network information
+ip a - newer version of ifconfig
+ifup - starts a network interface
+ifdown - stops a network interface
+netstat - network statistics; shows what ports are connected; live network traffic (-rnv - shows what interfaces are in use; how traffic is flowing etc)
+tcpdump - creates a live dump of network traffic
+ethtool - utility that provides NIC information 
+nmtui - 
+nmcli - 
+nm-connection-editor - 
+wget - downloads files from internet
+curl - downloads files from internet
+
+
+
 =====Add a service under systemctl management=====
 
 Create a unit file in /etc/systemd/system/servicename.service
@@ -555,4 +585,94 @@ mkdir mnt/[mount_dir_name]
 Mount the Samba share
 mount -t cifs //[Server_IP]/Anonymous /mnt/[mount_dir_name]
 
+=====NFS Config=====
 
+===Server===
+
+1) Install NFS Packages
+dnf install nfs-utlis libnfsidmap
+
+2) Enable the packages
+systemctl enable rpcbind
+systemctl enable nfs-server
+systemctl start rpcbind
+systemctl start nfs-server
+systemctl start rpc-statd
+systemctl start nfs-idmapd
+
+3) Create NFS share directory and assign permissions
+mkdir /[folder_name]
+chmod a+rwx / 777 /[folder_name]
+
+4) Modify /etc/exports file to add a new shared filesystem
+[foldername] [Client_IP] (rw, sync, no_root_squash) - share filesystem for a single IP
+[foldername] * (rw, sync, no_root_squash) - share filesystem for everybody
+
+5) Export the NFS Filesystem
+exportfs -rv
+
+===Client===
+
+1) Install NFS Packages
+dnf install nfs-utils rpcbind
+
+2) Enable and start rpcbind service
+systemctl start rpcbind
+
+3) Make sure firewall is stopped
+ps -ef | egrep "firewall|iptable"
+
+4) Show mount from the NFS Server
+showmount -e [Server_IP]
+
+5) Create a mount point
+mkdir /mnt/[client_mount_point]
+
+6) Mount the filesystem
+mount [Server_IP]:[Server_shared_folder] /mnt/[client_mount_point]
+
+7) Verify the mount point
+df -h
+
+8) To unmount
+umount /mnt/[client_mount_point]
+
+=====NIC Bonding Procedure=====
+
+1) modprobe bonding
+2) modinfo bonding
+3) Create /etc/sysconfig/network-scripts/ifcfg-bond0
+
+DEVICE=bond0
+TYPE=Bond
+NAME=bond0
+BONDING_MASTER=yes
+BOOTPROTO=none
+ONBOOT=yes
+IPADDR=[ip_addr]
+NETMASK=[netmask]
+GATEWAY=[gateway]
+BONDING_OPTS=”mode=5 miimon=100”
+
+4) Edit /etc/sysconfig/network-scripts/ethernet1
+
+TYPE=Ethernet
+BOOTPROTO=none
+DEVICE=[interface_name]
+ONBOOT=yes
+HWADDR=[MAC_addr]
+MASTER=bond0
+SLAVE=yes
+
+
+5) Edit /etc/sysconfig/network-scripts/ethernet2
+
+TYPE=Ethernet
+BOOTPROTO=none
+DEVICE=[interface_name]
+ONBOOT=yes
+HWADDR=[MAC_addr]
+MASTER=bond0
+SLAVE=yes
+
+6) Restart network - systemctl restart network
