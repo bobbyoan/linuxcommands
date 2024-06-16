@@ -489,11 +489,11 @@ ifdown - stops a network interface
 netstat - network statistics; shows what ports are connected; live network traffic (-rnv - shows what interfaces are in use; how traffic is flowing etc)
 tcpdump - creates a live dump of network traffic
 ethtool - utility that provides NIC information 
-nmtui - 
-nmcli - 
-nm-connection-editor - 
+nmtui - network manager text user interface
+nmcli - network manager command line interface
+nm-connection-editor - full graphical management tool providing access to NetworkManager configuration options; can only be accessed through GUI
 wget - downloads files from internet
-curl - downloads files from internet
+curl - test functionality of a webpage; -o - downloads files from internet (like wget)
 
 
 
@@ -676,3 +676,23 @@ MASTER=bond0
 SLAVE=yes
 
 6) Restart network - systemctl restart network
+
+=====Using nmcli to configure static IP=====
+
+nmcli device - get the listing of network interfaces
+nmcli connection modify [conn_name] ipv4.addresses [IP]/24
+nmcli connection modify [conn_name] ipv4.gateway [default_gateway]
+nmcli connection modify	[conn_name] ipv4.method manual
+nmcli connection modify [conn_name] ipv4.dns [8.8.8.8]
+nmcli connection down [conn_name] && nmcli connection up [conn_name]
+ip address show [conn_name]
+
+=====Using nmcli to configure a second static IP=====
+
+nmcli device status
+nmcli connection show --active
+ifconfig
+nmcli connection modify [conn_name] +ipv4.addresses [IP]/24
+nmcli connection reload
+systemctl reboot
+ip address show
