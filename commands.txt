@@ -10,6 +10,7 @@ exit - exits out of the shell
 script [logname] - saves all your shell activity in a log file
 history - shows commands that were executed; -c clears history
 cp - copies a file / directory
+cp -rv [path]/* [destination_path]/ - copies content of a folder in another folder
 vi - opens Vi text editor; also creates a new file
 rm - removes a file
 rm -r - removes a directory
