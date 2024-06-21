@@ -1,0 +1,275 @@
+===== C# Cheat Sheet =====
+
+===== Basic Syntax =====
+
+=== Variables and Data Types ===
+
+int number = 5; 
+string text = "Hello, World!"; 
+bool isActive = true; 
+double price = 99.99;
+
+=== Comments ===
+
+// Single line comment
+/* Multi-line comment */
+
+===== Control Structures =====
+
+=== Conditional Statements ===
+
+if (condition) { 
+    // code 
+} else if (anotherCondition) { 
+    // code 
+} else { 
+    // code 
+}
+
+switch (variable) { 
+    case value1: 
+        // code 
+        break; 
+    case value2: 
+        // code 
+        break; 
+    default: 
+        // code 
+        break; 
+}
+
+=== Loops ===
+
+for (int i = 0; i < 10; i++) { 
+    // code 
+}
+
+while (condition) { 
+    // code 
+}
+
+do { 
+    // code 
+} while (condition);
+
+foreach (var item in collection) { 
+    // code 
+}
+
+===== Methods =====
+
+=== Method Definition ===
+
+public void MyMethod() { 
+    // code 
+}
+
+public int Add(int a, int b) { 
+    return a + b; 
+}
+
+=== Method Overloading ===
+
+public void Display(int number) { 
+    Console.WriteLine(number); 
+}
+
+public void Display(string text) { 
+    Console.WriteLine(text); 
+}
+
+=== Passing Parameters ===
+
+public void MyMethod(int a, out int b) { 
+    b = a + 1; 
+}
+
+public void AnotherMethod(ref int a) { 
+    a += 1; 
+}
+
+public void ParamsMethod(params int[] numbers) { 
+    foreach (int number in numbers) { 
+        Console.WriteLine(number); 
+    } 
+}
+
+===== Classes and Objects =====
+
+=== Class Definition ===
+
+public class Person { 
+    public string Name { get; set; } 
+    public int Age { get; set; } 
+
+    public void Introduce() { 
+        Console.WriteLine($"Hello, my name is {Name} and I am {Age} years old."); 
+    } 
+}
+
+=== Creating Objects ===
+
+Person person = new Person(); 
+person.Name = "John"; 
+person.Age = 30; 
+person.Introduce();
+
+=== Constructors ===
+
+public class Person { 
+    public string Name { get; set; } 
+    public int Age { get; set; } 
+
+    public Person(string name, int age) { 
+        Name = name; 
+        Age = age; 
+    } 
+}
+
+Person person = new Person("John", 30);
+
+=== Inheritance ===
+
+public class Animal { 
+    public void Eat() { 
+        Console.WriteLine("Eating..."); 
+    } 
+}
+
+public class Dog : Animal { 
+    public void Bark() { 
+        Console.WriteLine("Barking..."); 
+    } 
+}
+
+Dog dog = new Dog(); 
+dog.Eat(); 
+dog.Bark();
+
+=== Polymorphism ===
+
+public class Animal { 
+    public virtual void MakeSound() { 
+        Console.WriteLine("Some sound..."); 
+    } 
+}
+
+public class Dog : Animal { 
+    public override void MakeSound() { 
+        Console.WriteLine("Bark..."); 
+    } 
+}
+
+Animal myDog = new Dog(); 
+myDog.MakeSound(); // Output: Bark...
+
+=== Properties ===
+
+=== Automatic Properties ===
+
+public class Person { 
+    public string Name { get; set; } 
+    public int Age { get; set; } 
+}
+
+=== Full Properties ===
+
+public class Person { 
+    private int age; 
+    public int Age { 
+        get { return age; } 
+        set { 
+            if (value >= 0) { 
+                age = value; 
+            } 
+        } 
+    } 
+}
+
+===== Collections =====
+
+=== Arrays ===
+
+int[] numbers = new int[5]; 
+int[] numbers = { 1, 2, 3, 4, 5 };
+
+=== List ===
+
+List<int> numbers = new List<int>(); 
+numbers.Add(1); 
+numbers.Add(2); 
+numbers.Add(3);
+
+foreach (int number in numbers) { 
+    Console.WriteLine(number); 
+}
+
+=== Dictionary ===
+
+Dictionary<string, int> ages = new Dictionary<string, int>(); 
+ages["John"] = 30; 
+ages["Jane"] = 25;
+
+foreach (var pair in ages) { 
+    Console.WriteLine($"{pair.Key} is {pair.Value} years old."); 
+}
+
+===== Exception Handling =====
+
+=== Try-Catch-Finally ===
+
+try { 
+    // code that may throw an exception 
+} catch (Exception ex) { 
+    // code to handle the exception 
+    Console.WriteLine(ex.Message); 
+} finally { 
+    // code to execute regardless of an exception 
+}
+
+=== File I/O ===
+
+=== Reading a File ===
+
+string text = File.ReadAllText(@"C:\example.txt"); 
+Console.WriteLine(text);
+
+=== Writing to a File ===
+string[] lines = { "First line", "Second line" }; 
+File.WriteAllLines(@"C:\example.txt", lines);
+
+=== LINQ ===
+
+=== Query Syntax ===
+
+int[] numbers = { 1, 2, 3, 4, 5 }; 
+var evenNumbers = from number in numbers
+                  where number % 2 == 0
+                  select number;
+
+foreach (var number in evenNumbers) { 
+    Console.WriteLine(number); 
+}
+
+=== Method Syntax ===
+
+int[] numbers = { 1, 2, 3, 4, 5 }; 
+var evenNumbers = numbers.Where(n => n % 2 == 0).ToList();
+
+evenNumbers.ForEach(Console.WriteLine);
+
+=== Asynchronous Programming ===
+
+=== Async and Await ===
+
+public async Task<string> GetDataAsync() { 
+    using (HttpClient client = new HttpClient()) { 
+        string result = await client.GetStringAsync("http://example.com"); 
+        return result; 
+    } 
+}
+
+public async Task MyMethodAsync() { 
+    string data = await GetDataAsync(); 
+    Console.WriteLine(data); 
+}
