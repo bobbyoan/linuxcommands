@@ -697,3 +697,25 @@ nmcli connection modify [conn_name] +ipv4.addresses [IP]/24
 nmcli connection reload
 systemctl reboot
 ip address show
+
+=====Configure FTP on the remote server=====
+
+1) rpm -qa | grep vsftpd
+2) nano /etc/vsftpd/vsftpd.conf
+3) Disable anonymous_login=NO
+4) Enable ascii_upload_enable=YES; ascii_download_enable=YES
+5) Enable ftpd_banner
+6) Add at the end of the file use_localtime=YES
+7) systemctl start vsftpd
+8) systemctl enable vsfpd
+9) systemctl stop firewalld or enable port 21 
+10) useradd [ftp_user]
+
+=====Transfer file to the FTP server=====
+
+1) ftp [IP]
+2) Enter username and pass
+3) bi
+4) hash
+5) put [filename]
+6) bye

@@ -1,0 +1,137 @@
+/* Basic Syntax */
+selector {
+    property: value;
+}
+
+/* Text Formatting */
+p {
+    color: #333; /* Any valid color */
+    font-size: 12px; /* px, em, rem, %, vw, vh */
+    font-weight: normal; /* normal, bold, bolder, lighter, 100-900 */
+    font-style: normal; /* normal, italic, oblique */
+    text-align: left; /* left, right, center, justify */
+    text-decoration: none; /* none, underline, overline, line-through */
+    text-transform: none; /* none, capitalize, uppercase, lowercase */
+    line-height: 1.5; /* normal, number, length, percentage */
+    letter-spacing: normal; /* normal, length */
+}
+
+/* Backgrounds */
+body {
+    background-color: #f0f0f0; /* Any valid color */
+    background-image: url('image.jpg'); /* URL, none */
+    background-repeat: repeat; /* repeat, repeat-x, repeat-y, no-repeat */
+    background-size: auto; /* auto, cover, contain, length, percentage */
+    background-position: left top; /* left, center, right, top, bottom, x% y%, xpos ypos */
+    background-attachment: scroll; /* scroll, fixed, local */
+}
+
+/* Box Model */
+div {
+    width: 100px; /* length, percentage, auto */
+    height: 100px; /* length, percentage, auto */
+    padding: 10px; /* top right bottom left, length, percentage */
+    margin: 20px; /* top right bottom left, length, percentage, auto */
+    border: 1px solid #000; /* border-width style color */
+    border-radius: 5px; /* length, percentage */
+    box-shadow: 0px 0px 5px #000; /* h-offset v-offset blur color */
+}
+
+/* Positioning */
+.box {
+    position: static; /* static, relative, absolute, fixed, sticky */
+    top: 10px; /* length, percentage, auto */
+    right: 0; /* length, percentage, auto */
+    bottom: 0; /* length, percentage, auto */
+    left: 20px; /* length, percentage, auto */
+    z-index: 1; /* integer, auto */
+    overflow: visible; /* visible, hidden, scroll, auto */
+}
+
+/* Flexbox */
+.container {
+    display: flex; /* flex, inline-flex */
+    flex-direction: row; /* row, row-reverse, column, column-reverse */
+    justify-content: flex-start; /* flex-start, flex-end, center, space-between, space-around, space-evenly */
+    align-items: stretch; /* stretch, flex-start, flex-end, center, baseline */
+    flex-wrap: nowrap; /* nowrap, wrap, wrap-reverse */
+    gap: 10px; /* length */
+}
+
+/* Grid */
+.grid-container {
+    display: grid; /* grid, inline-grid */
+    grid-template-columns: 1fr 2fr; /* length, percentage, fraction (fr) */
+    grid-template-rows: auto; /* length, percentage, auto */
+    grid-gap: 10px; /* length */
+    justify-items: start; /* start, end, center, stretch */
+    align-items: start; /* start, end, center, stretch */
+}
+
+/* Pseudo-classes */
+a:hover {
+    color: blue; /* Any valid color */
+}
+
+input:focus {
+    border-color: blue; /* Any valid color */
+}
+
+/* Transitions */
+.button {
+    transition: background-color 0.3s ease; /* property duration timing-function */
+    transition-property: all; /* all, none, specific property */
+    transition-duration: 0.3s; /* time */
+    transition-timing-function: ease; /* ease, linear, ease-in, ease-out, ease-in-out, cubic-bezier */
+    transition-delay: 0s; /* time */
+}
+
+.button:hover {
+    background-color: #555; /* Any valid color */
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    body {
+        background-color: lightblue; /* Any valid color */
+    }
+}
+
+/* Variables */
+:root {
+    --main-color: #3498db; /* Any valid color */
+}
+
+.header {
+    color: var(--main-color); /* Using CSS variable */
+}
+
+/* Display Property */
+.display {
+    display: block; /* block, inline, inline-block, flex, grid, none */
+}
+
+/* Overflow */
+.overflow {
+    overflow: visible; /* visible, hidden, scroll, auto */
+}
+
+/* Opacity */
+.opacity {
+    opacity: 1; /* 0 to 1 */
+}
+
+/* Visibility */
+.visibility {
+    visibility: visible; /* visible, hidden, collapse */
+}
+
+/* Float */
+.float {
+    float: left; /* left, right, none */
+}
+
+/* Clear */
+.clear {
+    clear: none; /* none, left, right, both */
+}
