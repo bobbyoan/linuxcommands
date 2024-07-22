@@ -57,6 +57,11 @@ alias - create shortcut for longer commands
 unalias [alias name] - removes the alias
 pushd - adds directories to the directory stack 
 popd - removes directories from the directory stack
+yum install [package] - installs a package
+yum remove [package] - removes a package
+yum update - updates all outdated packages while keeping the old versions
+yum upgrade - updates all outdated packages while removing older versions
+
 
 
 =====Access Control List=====
@@ -141,6 +146,14 @@ echo $0 - shows the shell
 mpstat - shows CPU usage; 
 mpstat -P ALL - command to display detailed statistics about each individual CPU or processor core present in the system
 sar -u - used to display CPU utilization statistics collected by the System Activity Reportershows CPU usage	for all	cores
+scp -P [port_nr] [file_to_transfer] [user]@[ip]:[path] - Secure	Copy Protocol syntax
+rsync -zvh [file] [destination] - transfer a file using rsync on the local machine
+rsync -azvh [folder] [destination] - transfer a folder using rsync on the local machine
+rsync -avz [file] [user@ip:[location]] - transfer a file to a remote machine
+rsync -rzv -e 'ssh -p [port]' --progress [file] [user@ip:[location]] - transfer a file to / from a remote machine specifying the port
+
+
+
 
 =====User Account Management=====
 
@@ -285,7 +298,9 @@ init 6 - reboot the system
 
 strace -e open [command] - shows what file is accessed when executing a command
 su - switch user (to change user to root run su -)
-rpm -qa [packet name] - queries installed package 
+rpm -qa [packet name] - queries installed package
+rpm -ihv [packet name] - installs a local package
+rpm -e [package name] - removes a local package 
 find / -perm /6000 -type f - finds all executables in Linux with setuid and setgid permissions
 
 =====Linux Boot Process -old- before CentOS/RedHat7 =====
@@ -719,3 +734,28 @@ ip address show
 4) hash
 5) put [filename]
 6) bye
+
+=====Fix Backspace Terminal=====
+
+1) stty -a - check how erase is defined
+2) Ctrl + V 
+3) Backspace
+4) Copy code for Backspace
+5) stty erase ^H
+6) For persistance add stty erase ^H to .bashrc
+
+=====Create Local Repo=====
+
+1) Create a new folder
+2) Copy all content of Packages folder to the new folder created
+3) Go to /etc/yum.repos.d
+4) Create local.repo
+	[OS]
+	name=[OS]
+	baseurl=file:///[new folder path]
+	enabled=1
+	gpgcheck=0
+5) yum install createrepo
+6) createrepo /[new folder path]
+7) yum clean all - clean cache
+8) yum repolist all - shows all repositories
