@@ -395,7 +395,33 @@ nm-connection-editor - full graphical management tool providing access to Networ
 wget - downloads files from internet
 curl - test functionality of a webpage; -o - downloads files from internet (like wget)
 
+=====Creating a VLAN=====
 
+1) ip link show - list all available interfaces
+2) ip link add link [interface_name] name [interface_name.id] type vlan id [id] - create vlan interface
+3) ip link set dev [interface_name.id] up - set vlan interface active
+4a) ip addr add 192.168.10.2/24 dev [interface_name.id] - manual set ip address
+4b) dhclient [interface_name.id] - automatic set ip address using dhcp 
+5) ip addr show [interface_name.id] - check vlan config
+
+To make vlan persistent:
+
+*) For Debian based distros:
+1) Edit /etc/network/interfaces
+	auto [interface_name.id]
+	iface [interface_name.id] inet static
+	address 192.168.10.2
+	netmask 255.255.255.0
+	vlan-raw-device [interface_name]
+
+*) For RHEL based distros:
+1) Edit /etc/sysconfig/network-scripts:
+	DEVICE=[interface_name.id]
+	BOOTPROTO=static
+	IPADDR=192.168.10.2
+	NETMASK=255.255.255.0
+	ONBOOT=yes
+	VLAN=yes
 
 =====Add a service under systemctl management=====
 
