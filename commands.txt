@@ -152,9 +152,6 @@ rsync -azvh [folder] [destination] - transfer a folder using rsync on the local 
 rsync -avz [file] [user@ip:[location]] - transfer a file to a remote machine
 rsync -rzv -e 'ssh -p [port]' --progress [file] [user@ip:[location]] - transfer a file to / from a remote machine specifying the port
 
-
-
-
 =====User Account Management=====
 
 useradd [username] - adds a new user
