@@ -2,7 +2,7 @@
 =====Basic Commands=====
 
 git init - initialize a new Git repository
-git clone [url] - clone an existing repository from an URL
+git clone git@github.com:/username/repository.git - clone an existing repository using SSH
 git status - shows the working directory status
 git add [file] - add a file to the staging area (use git add . to add all files to the staging area)
 git commit -m [message] - commit changes with a message
