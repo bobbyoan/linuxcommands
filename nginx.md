@@ -1,33 +1,37 @@
+---
+title: nginx
+description: 
+published: true
+date: 2025-02-18T10:51:52.927Z
+tags: 
+editor: markdown
+dateCreated: 2025-02-15T20:11:24.257Z
+---
 
-=====Nginx Configuration Cheat Sheet=====
 
-=====Basic Commands=====
+# NginX Commands
 
-# Start Nginx
-sudo systemctl start nginx
+## Basic Commands
 
-# Stop Nginx
-sudo systemctl stop nginx
+```bash
+sudo systemctl start nginx - start NginX
+sudo systemctl stop nginx - stop NginX
+sudo systemctl restart nginx - restart NginX
+sudo systemctl reload nginx - reload without downtime
+sudo systemctl status nginx - check status
+sudo nginx -t - check configuration
+```
 
-# Restart Nginx
-sudo systemctl restart nginx
+## Configuration File Locations
 
-# Reload Nginx without downtime
-sudo systemctl reload nginx
-
-# Check Nginx status
-sudo systemctl status nginx
-
-# Test Nginx configuration for syntax errors
-sudo nginx -t
-
-=====Configuration File Locations=====
-
+```bash
 - Main configuration file: `/etc/nginx/nginx.conf`
 - Additional configuration files: `/etc/nginx/conf.d/` or `/etc/nginx/sites-available/` (symlink to `/etc/nginx/sites-enabled/`)
+```
 
-=====Basic Configuration Example=====
+# Basic Configuration Example
 
+```bash
 user nginx;
 worker_processes auto;
 error_log /var/log/nginx/error.log;
@@ -44,10 +48,11 @@ http {
     keepalive_timeout 65;
     include /etc/nginx/conf.d/*.conf;
 }
+```
 
+# Server Block Example=====
 
-=====Server Block Example=====
-
+```bash
 server {
     listen 80;
     server_name example.com www.example.com;
@@ -68,10 +73,11 @@ server {
         location = /50x.html {
     }
 }
+```
 
+## SSL Configuration Example
 
-=====SSL Configuration Example=====
-
+```bash
 sudo yum install epel-release
 sudo yum install certbot python3-certbot-nginx
 sudo certbot --nginx - install SSL Certificate
@@ -110,10 +116,11 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
+```
 
+## Common Directives
 
-=====Common Directives=====
-
+```bash
 - `listen`: Specifies the port and IP address for the server to listen on.
 - `server_name`: Defines the domain names for the server.
 - `location`: Defines how to process requests that match a given pattern.
@@ -122,34 +129,48 @@ server {
 - `index`: Defines the default file to serve.
 - `error_page`: Specifies custom error pages.
 - `rewrite`: Defines URL rewriting rules.
+```
 
-=====Location Block Examples=====
 
-# Match exact path
+## Location Block Examples
+
+### Match exact path
+
+```bash
 location = /exact {
     return 200 'Exact match';
 }
+```
 
-# Match path prefix
+### Match path prefix
+
+```bash
 location /prefix {
     return 200 'Prefix match';
 }
+```
 
-# Match by regex
+### Match by regex
+
+```bash
 location ~ \.php$ {
     fastcgi_pass 127.0.0.1:9000;
     fastcgi_index index.php;
     include fastcgi_params;
 }
+```
 
-# Match any request
+### Match any request
+
+```bash
 location / {
     try_files $uri $uri/ =404;
 }
+```
 
+## Load Balancing
 
-=====Load Balancing=====
-
+```bash
 upstream backend {
     server backend1.example.com;
     server backend2.example.com;
@@ -167,9 +188,11 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }
+```
 
-=====Rate Limiting=====
+## Rate Limiting
 
+```bash
 http {
     limit_req_zone $binary_remote_addr zone=mylimit:10m rate=10r/s;
 
@@ -183,10 +206,11 @@ http {
         }
     }
 }
+```
 
+## Caching
 
-=====Caching=====
-
+```bash
 http {
     proxy_cache_path /data/nginx/cache keys_zone=my_cache:10m;
 
@@ -201,4 +225,4 @@ http {
         }
     }
 }
-
+```
