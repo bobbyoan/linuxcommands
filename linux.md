@@ -2,7 +2,7 @@
 title: linux
 description: 
 published: true
-date: 2025-02-18T11:31:44.312Z
+date: 2025-02-18T11:38:27.965Z
 tags: 
 editor: markdown
 dateCreated: 2025-02-15T20:11:21.990Z
@@ -336,32 +336,39 @@ rpm -ihv [packet name] - installs a local package
 rpm -e [package name] - removes a local package 
 find / -perm /6000 -type f - finds all executables in Linux with setuid and setgid permissions
 
-=====Linux Boot Process -old- before CentOS/RedHat7 =====
+## Linux Boot Process -old- before CentOS/RedHat7
 
+```bash
 BIOS - Basic Input / Output System executes MBR
 MBR - Master Boot Record executes GRUB
 GRUB - Grand Unified Bootloader executes Kernel
 Kernel - executes /sbin/init
 Init - executes runlevel programs
 Runlevel - runlevel programs are executed from /etc/rc.d/rc*.d/
+```
 
-=====Linux Boot Process -new- =====
+## Linux Boot Process -new-
 
+```bash
 BIOS -> POST (Power On Self Test)
 MBR - saved in the first sector of the HDD - stores location of the GRUB2
 GRUB2 - loads the Kernel (/boot/grub2/grub.cfg)
 Kernel - loads the drivers from initrd.img - starts the first system process (systemd)
 systemd - system daemon (PID 1) - reads (/etc/systemd/system/default.target) to bring the system to run-level (7 run-levels - 0-6)
+```
 
-=====Customize MOTD=====
+## Customize MOTD
 
+```bash
 1) Create new file in /etc/profile.d/motd.sh
 2) Add desired commands in mothd.sh file
 3) Modify the /etc/ssh/sshd_config file (#PrintMotd yes -> PrintMotd no)
 4) Restart sshd.service
+```
 
-=====Files=====
+## Files
 
+```bash
 /etc/passwd - stores password info and shell information
 /etc/group - stores group info
 /etc/shadow - stores stores hashed passwords
@@ -382,10 +389,11 @@ systemd - system daemon (PID 1) - reads (/etc/systemd/system/default.target) to 
 /etc/sysconfig/network
 /etc/sysconfig/network-scripts/ifcfg-nic
 /etc/resolv.conf
+```
 
+## Logs
 
-=====Logs=====
-
+```bash
 /var/log - log directory
 boot - boot info
 chronyd - an implementation of NTP (Network Time Protocol)
@@ -394,26 +402,31 @@ maillog - mail logs
 secure - saves info about users login
 messages - stores all information about hardware, software, applications 
 httpd - Apache Web Server logs
+```
 
+## Environment Variables
 
-=====Environment Variables=====
-
+```bash
 printenv / env - displays all environment variables
 echo $[ENVVAR] - displays ONE environment variable
 export [ENVVAR]=[value] - set the environment variable
 vi .bashrc - to set the environment variable permanently ([ENVVAR]=[value]; export [ENVVAR])
 vi /etc/profile or /etc/bashrc - to globally set the environment variable permanently ([ENVVAR]=[value]; export [ENVVAR])
 HISTCONTROL - history recording; ignorespace - doesn't save command if there is a space before the command; ignoredups - doesn't record duplicates; ignoreboth - ignorespace & ignoredups
+```
 
-=====Terminal Control Keys=====
+## Terminal Control Keys
 
+```bash
 Ctrl + U - erases everything you typed on the command line
 Ctrl + C - stops / kills a command
 Ctrl + Z - suspend a command
 Ctrl + D - exit from an interactive program (signals end of data)
+```
 
-=====Networking=====
+## Networking
 
+```bash
 ping - sends a series of packages to test connectivity to a specified host
 ifconfig - utility to display network information
 ip a - newer version of ifconfig
@@ -427,9 +440,11 @@ nmcli - network manager command line interface
 nm-connection-editor - full graphical management tool providing access to NetworkManager configuration options; can only be accessed through GUI
 wget - downloads files from internet
 curl - test functionality of a webpage; -o - downloads files from internet (like wget)
+```
 
-=====Creating a VLAN=====
+## Creating a VLAN
 
+```bash
 1) ip link show - list all available interfaces
 2) ip link add link [interface_name] name [interface_name.id] type vlan id [id] - create vlan interface
 3) ip link set dev [interface_name.id] up - set vlan interface active
@@ -455,13 +470,17 @@ To make vlan persistent:
 	NETMASK=255.255.255.0
 	ONBOOT=yes
 	VLAN=yes
+```
 
-=====Add a service under systemctl management=====
+## Add a service under systemctl management
 
+```bash
 Create a unit file in /etc/systemd/system/servicename.service
+```
 
-=====Change ROOT Password=====
+## Change ROOT Password
 
+```bash
 01) Reboot
 02) Press e when the OS and rescue partitions are shown
 03a) Replace ro with rw init=/sysroot/bin/sh after root=/dev/mapper/[OS]-root - RHEL v8 and below
@@ -473,14 +492,18 @@ Create a unit file in /etc/systemd/system/servicename.service
 08) touch /.autorelabel
 09) exit
 10) reboot
+```
 
-=====Fork Bomb Fix=====
+## Fork Bomb Fix
 
+```bash
 ulimit -u / ulimit -a
 ulimit -S -u 5000
+```
 
-=====Samba Install and Configuration=====
+## Samba Install and Configuration
 
+```bash
 1) Install Samba packages
 dnf install samba, samba-client, samba-common
 
@@ -543,11 +566,13 @@ mkdir mnt/[mount_dir_name]
 
 Mount the Samba share
 mount -t cifs //[Server_IP]/Anonymous /mnt/[mount_dir_name]
+```
 
-=====NFS Config=====
+## NFS Config
 
-===Server===
+### Server
 
+```bash
 1) Install NFS Packages
 dnf install nfs-utlis libnfsidmap
 
@@ -569,9 +594,11 @@ chmod a+rwx / 777 /[folder_name]
 
 5) Export the NFS Filesystem
 exportfs -rv
+```
 
-===Client===
+### Client
 
+```bash
 1) Install NFS Packages
 dnf install nfs-utils rpcbind
 
@@ -595,9 +622,11 @@ df -h
 
 8) To unmount
 umount /mnt/[client_mount_point]
+```
 
-=====NIC Bonding Procedure=====
+## NIC Bonding Procedure
 
+```bash
 1) modprobe bonding
 2) modinfo bonding
 3) Create /etc/sysconfig/network-scripts/ifcfg-bond0
@@ -635,6 +664,7 @@ MASTER=bond0
 SLAVE=yes
 
 6) Restart network - systemctl restart network
+```
 
 =====Using nmcli to configure static IP=====
 
