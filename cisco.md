@@ -2,14 +2,15 @@
 title: cisco
 description: 
 published: true
-date: 2025-02-18T09:23:36.635Z
+date: 2025-02-18T10:03:04.153Z
 tags: 
 editor: markdown
 dateCreated: 2025-02-15T20:11:12.212Z
 ---
 
-# Configuration Commands 
-## Basic Configuration
+# Cisco Commands
+## Configuration Commands 
+### Basic Configuration
 These are used in global configuration mode (configure terminal).
 ```bash
 hostname <name>: Sets the hostname of the device.
@@ -19,7 +20,7 @@ banner motd #<message>#: Configures a message of the day banner.
 service password-encryption: Encrypts plain-text passwords in the configuration.
 ```
 
-## Interface Configuration
+### Interface Configuration
 ```bash
 interface <type> <number>: Accesses the interface (e.g., interface GigabitEthernet0/1).
 ip address <IP> <subnet>: Assigns an IP address and subnet mask.
@@ -29,7 +30,7 @@ speed <value>: Sets the interface speed (10, 100, 1000 Mbps).
 duplex <mode>: Sets the duplex mode (auto, full, half).
 ```
 
-## Routing
+### Routing
 
 ```bash
 ip route <network> <mask> <next-hop>: Configures a static route.
@@ -43,7 +44,7 @@ interface vlan <id>: Configures the VLAN interface.
 ```
 
 
-# Show Commands
+## Show Commands
 Used for troubleshooting and monitoring.
 
 ```bash
@@ -58,7 +59,7 @@ show ip route: Displays the routing table.
 show protocols: Displays the status of network layer protocols.
 ```
 
-# Debug Commands
+## Debug Commands
 These commands enable real-time troubleshooting.
 
 ```bash
@@ -68,7 +69,7 @@ debug ip packet: Monitors IP packet activity (use with caution).
 undebug all or no debug all: Turns off all debugging.
 ```
 
-# Privileged EXEC Mode Commands
+## Privileged EXEC Mode Commands
 Available after entering enable mode.
 
 ```bash
@@ -80,7 +81,7 @@ ping <IP>: Sends an ICMP echo to test connectivity.
 traceroute <IP>: Traces the route to a destination.
 ```
 
-# Access Control Commands
+## Access Control Commands
 For configuring access control lists (ACLs).
 
 ```bash
@@ -90,7 +91,7 @@ ip access-group <ACL-number/name> in/out: Applies an ACL to an interface.
 show access-lists: Displays configured ACLs.
 ```
 
-# Security Commands
+## Security Commands
 For enhancing device security.
 
 ```bash
@@ -101,7 +102,7 @@ service ssh: Enables SSH service.
 crypto key generate rsa: Generates an RSA key pair for SSH.
 ```
 
-# Switching-Specific Commands
+## Switching-Specific Commands
 For Layer 2 configurations.
 
 ```bash
@@ -113,7 +114,7 @@ switchport access vlan <id>: Assigns a VLAN to an access port.
 show spanning-tree: Displays spanning-tree details.
 ```
 
-# QoS Commands
+## QoS Commands
 For quality of service.
 
 ```bash
@@ -123,7 +124,7 @@ policy-map <name>: Defines a QoS policy.
 service-policy <policy>: Applies a QoS policy to an interface.
 ```
 
-# NAT Commands
+## NAT Commands
 For configuring Network Address Translation.
 
 ```bash
@@ -134,7 +135,7 @@ ip nat inside source list <number> pool <name>: Maps a NAT pool to ACL traffic.
 show ip nat translations: Displays NAT translations.
 ```
 
-# Logging and Monitoring
+## Logging and Monitoring
 
 ```bash
 logging console: Enables console logging.
