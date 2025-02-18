@@ -2,7 +2,7 @@
 title: linux
 description: 
 published: true
-date: 2025-02-18T11:45:42.721Z
+date: 2025-02-18T12:19:20.150Z
 tags: 
 editor: markdown
 dateCreated: 2025-02-15T20:11:21.990Z
@@ -494,6 +494,13 @@ Create a unit file in /etc/systemd/system/servicename.service
 08) touch /.autorelabel
 09) exit
 10) reboot
+```
+
+## Enable ROOT Account
+
+```bash
+1) sudo passwd root - change root password
+2) sudo passwd -u root - unlocks root account
 ```
 
 ## Fork Bomb Fix
