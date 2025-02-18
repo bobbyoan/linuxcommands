@@ -2,7 +2,7 @@
 title: linux
 description: 
 published: true
-date: 2025-02-18T11:44:56.150Z
+date: 2025-02-18T11:45:42.721Z
 tags: 
 editor: markdown
 dateCreated: 2025-02-15T20:11:21.990Z
@@ -329,12 +329,14 @@ init 6 - reboot the system
 
 ## Custom
 
+```bash
 strace -e open [command] - shows what file is accessed when executing a command
 su - switch user (to change user to root run su -)
 rpm -qa [packet name] - queries installed package
 rpm -ihv [packet name] - installs a local package
 rpm -e [package name] - removes a local package 
 find / -perm /6000 -type f - finds all executables in Linux with setuid and setgid permissions
+```
 
 ## Linux Boot Process -old- before CentOS/RedHat7
 
