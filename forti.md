@@ -1,143 +1,126 @@
-### 1. General System Commands
+---
+title: forti
+description: 
+published: true
+date: 2025-02-18T09:48:27.276Z
+tags: 
+editor: markdown
+dateCreated: 2025-02-15T20:11:16.426Z
+---
 
-# Displays the system status, firmware version, and device information.
-get system status
+# Fortigate Commands
 
-# Configures global system settings.
-config system global
-set hostname MyFortiGate
-set timezone 04
-end
+## General System Settings
 
-# Reboots the FortiGate device.
-execute reboot
+```bash
+get system status                       # Displays the system status, firmware version, and device information
+config system global                     # Configures global system settings
+set hostname <hostname>                   # Sets hostname
+set timezone <timezone>                    # Sets timezone
+execute reboot                            # Reboots the FortiGate device
+execute shutdown                          # Shuts down the FortiGate device
+```
 
-# Shuts down the FortiGate device.
-execute shutdown
+## Interface Configuration
 
-### 2. Interface Configuration
-
-# Configures network interfaces.
-config system interface
+```bash
+config system interface                   # Configures network interfaces
 edit port1
-set ip 192.168.1.1 255.255.255.0
-set allowaccess ping https ssh
-set mode static
-end
+set ip 192.168.1.1 255.255.255.0          # Sets IP address and subnet mask
+set allowaccess ping https ssh            # Sets allowed access methods
+set mode static                           # Sets interface mode to static
+get system interface                      # Displays interface details
+```
 
-# Displays interface details.
-get system interface
+## Firewall Configuration
 
-### 3. Firewall Configuration
-
-# Configures firewall policies.
-config firewall policy
+```bash
+config firewall policy                     # Configures firewall policies
 edit 1
-set name "Allow-Web-Traffic"
-set srcintf "port1"
-set dstintf "port2"
-set srcaddr "all"
-set dstaddr "all"
-set action accept
-set schedule "always"
-set service "HTTP"
-set logtraffic all
-end
+set name "Allow-Web-Traffic"               # Sets policy name
+set srcintf "port1"                        # Sets source interface
+set dstintf "port2"                        # Sets destination interface
+set srcaddr "all"                          # Sets source address
+set dstaddr "all"                          # Sets destination address
+set action accept                          # Sets action to accept traffic
+set schedule "always"                      # Sets schedule
+set service "HTTP"                         # Defines allowed service
+set logtraffic all                         # Enables logging for all traffic
+show firewall policy                       # Displays configured firewall policies
+```
 
-# Displays the configured firewall policies.
-show firewall policy
+## Routing Configuration
 
-### 4. Routing Configuration
-
-# Configures static routes.
-config router static
+```bash
+config router static                        # Configures static routes
 edit 1
-set gateway 192.168.1.254
-set device "port1"
-set dst 0.0.0.0 0.0.0.0
-end
+set gateway 192.168.1.254                   # Sets the gateway
+set device "port1"                          # Sets the interface for routing
+set dst 0.0.0.0 0.0.0.0                     # Configures default route
+get router info routing-table all          # Displays the current routing table
+```
 
-# Displays the current routing table.
-get router info routing-table all
+## User and Authentication
 
-### 5. User and Authentication
-
-# Creates local user accounts.
-config user local
+```bash
+config user local                          # Creates local user accounts
 edit "admin"
-set type password
-set passwd "securepassword"
-end
+set type password                          # Sets account type as password-based
+set passwd "securepassword"                # Sets user password
+get user local                             # Displays local user account information
+```
 
-# Displays local user account information.
-get user local
 
-### 6. VPN Configuration
+## VPN Configuration
 
-# Configures Phase 1 of IPsec VPN.
-config vpn ipsec phase1-interface
+```bash
+config vpn ipsec phase1-interface           # Configures Phase 1 of IPsec VPN
 edit "VPN1"
-set interface "port1"
-set proposal aes256-sha1
-set remote-gw 192.168.2.1
-set psksecret "vpnpassword"
-end
-
-# Configures Phase 2 of IPsec VPN.
-config vpn ipsec phase2-interface
+set interface "port1"                       # Sets the interface for the VPN
+set proposal aes256-sha1                    # Sets encryption and authentication methods
+set remote-gw 192.168.2.1                   # Sets remote gateway IP
+set psksecret "vpnpassword"                 # Sets pre-shared key
+config vpn ipsec phase2-interface           # Configures Phase 2 of IPsec VPN
 edit "VPN1"
-set phase1name "VPN1"
-set proposal aes256-sha1
-set src-subnet 192.168.1.0 255.255.255.0
-set dst-subnet 192.168.2.0 255.255.255.0
-end
+set phase1name "VPN1"                       # Associates with Phase 1
+set proposal aes256-sha1                    # Sets encryption and authentication methods
+set src-subnet 192.168.1.0 255.255.255.0    # Defines source subnet
+set dst-subnet 192.168.2.0 255.255.255.0    # Defines destination subnet
+get vpn ipsec tunnel summary               # Displays the status of IPsec tunnels
+```
 
-# Displays the status of IPsec tunnels.
-get vpn ipsec tunnel summary
+## Logging and Monitoring
 
-### 7. Logging and Monitoring
+```bash
+execute log filter category "traffic"       # Filters logs by category
+execute log display                         # Displays filtered logs
+get system session list                     # Displays the list of active sessions
+```
 
-# Filters logs by category.
-execute log filter category "traffic"
+## Troubleshooting Commands
 
-# Displays filtered logs.
-execute log display
+```bash
+execute ping 8.8.8.8                        # Sends an ICMP echo request to test connectivity
+execute traceroute 8.8.8.8                   # Traces the route to a destination
+diagnose debug enable                       # Enables debugging mode
+diagnose debug console timestamp enable     # Adds timestamps to debug output
+```
 
-# Displays the list of active sessions.
-get system session list
+## Backup and Restore
 
-### 8. Troubleshooting Commands
+```bash
+execute backup config tftp 192.168.1.10 config_backup.conf  # Backs up the configuration file
+execute restore config tftp 192.168.1.10 config_backup.conf  # Restores the configuration file
+```
 
-# Sends an ICMP echo request to test connectivity.
-execute ping 8.8.8.8
+## High Availability (HA)
 
-# Traces the route to a destination.
-execute traceroute 8.8.8.8
-
-# Enables debugging mode.
-diagnose debug enable
-
-# Adds timestamps to debug output.
-diagnose debug console timestamp enable
-
-### 9. Backup and Restore
-
-# Backs up the configuration file.
-execute backup config tftp 192.168.1.10 config_backup.conf
-
-# Restores the configuration file.
-execute restore config tftp 192.168.1.10 config_backup.conf
-
-### 10. High Availability (HA)
-
-# Configures HA settings.
-config system ha
-set mode a-p
-set group-name "MyHAGroup"
-set password "hapassword"
-set priority 200
-set monitor "port1"
-end
-
-# Displays the HA status.
-get system ha status
+```bash
+config system ha                            # Configures HA settings
+set mode a-p                                # Sets HA mode to Active-Passive
+set group-name "MyHAGroup"                  # Sets HA group name
+set password "hapassword"                    # Sets HA group password
+set priority 200                            # Sets HA priority
+set monitor "port1"                         # Monitors interface for HA
+get system ha status                        # Displays the HA status
+```
