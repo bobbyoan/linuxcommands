@@ -2,7 +2,7 @@
 title: linux
 description: 
 published: true
-date: 2025-02-18T11:38:27.965Z
+date: 2025-02-18T11:44:56.150Z
 tags: 
 editor: markdown
 dateCreated: 2025-02-15T20:11:21.990Z
@@ -666,8 +666,11 @@ SLAVE=yes
 6) Restart network - systemctl restart network
 ```
 
-=====Using nmcli to configure static IP=====
+## nmcli
 
+### Using nmcli to configure static IP
+
+```bash
 nmcli device - get the listing of network interfaces
 nmcli connection modify [conn_name] ipv4.addresses [IP]/24
 nmcli connection modify [conn_name] ipv4.gateway [default_gateway]
@@ -675,9 +678,10 @@ nmcli connection modify	[conn_name] ipv4.method manual
 nmcli connection modify [conn_name] ipv4.dns [8.8.8.8]
 nmcli connection down [conn_name] && nmcli connection up [conn_name]
 ip address show [conn_name]
+```
+### Using nmcli to configure a second static IP
 
-=====Using nmcli to configure a second static IP=====
-
+```bash
 nmcli device status
 nmcli connection show --active
 ifconfig
@@ -685,9 +689,13 @@ nmcli connection modify [conn_name] +ipv4.addresses [IP]/24
 nmcli connection reload
 systemctl reboot
 ip address show
+```
 
-=====Configure FTP on the remote server=====
+## FTP
 
+### Configure FTP on the remote server
+
+```bash
 1) rpm -qa | grep vsftpd
 2) nano /etc/vsftpd/vsftpd.conf
 3) Disable anonymous_login=NO
@@ -698,27 +706,33 @@ ip address show
 8) systemctl enable vsfpd
 9) systemctl stop firewalld or enable port 21 
 10) useradd [ftp_user]
+```
 
-=====Transfer file to the FTP server=====
+### Transfer file to the FTP server
 
+```bash
 1) ftp [IP]
 2) Enter username and pass
 3) bi
 4) hash
 5) put [filename]
 6) bye
+```
 
-=====Fix Backspace Terminal=====
+## Fix Backspace Terminal
 
+```bash
 1) stty -a - check how erase is defined
 2) Ctrl + V 
 3) Backspace
 4) Copy code for Backspace
 5) stty erase ^H
 6) For persistance add stty erase ^H to .bashrc
+```
 
-=====Create Local Repo=====
+## Create Local Repo
 
+```bash
 1) Create a new folder
 2) Copy all content of Packages folder to the new folder created
 3) Go to /etc/yum.repos.d
@@ -732,3 +746,4 @@ ip address show
 6) createrepo /[new folder path]
 7) yum clean all - clean cache
 8) yum repolist all - shows all repositories
+```
