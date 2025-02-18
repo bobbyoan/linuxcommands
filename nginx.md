@@ -2,7 +2,7 @@
 title: nginx
 description: 
 published: true
-date: 2025-02-18T10:51:52.927Z
+date: 2025-02-18T10:52:30.204Z
 tags: 
 editor: markdown
 dateCreated: 2025-02-15T20:11:24.257Z
@@ -29,7 +29,7 @@ sudo nginx -t - check configuration
 - Additional configuration files: `/etc/nginx/conf.d/` or `/etc/nginx/sites-available/` (symlink to `/etc/nginx/sites-enabled/`)
 ```
 
-# Basic Configuration Example
+## Basic Configuration Example
 
 ```bash
 user nginx;
@@ -50,7 +50,7 @@ http {
 }
 ```
 
-# Server Block Example=====
+## Server Block Example
 
 ```bash
 server {
