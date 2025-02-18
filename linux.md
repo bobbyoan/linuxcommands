@@ -2,7 +2,7 @@
 title: linux
 description: 
 published: true
-date: 2025-02-18T09:17:18.970Z
+date: 2025-02-18T11:06:39.786Z
 tags: 
 editor: markdown
 dateCreated: 2025-02-15T20:11:21.990Z
@@ -14,34 +14,14 @@ dateCreated: 2025-02-15T20:11:21.990Z
 ## Fundamentals
 
 ```bash
-# Change Directory
-cd
-
-# List Content
-ls
-
-# Print Working Directory
-pwd
-
-# Creates a New File
-touch
-
-# Clears the screen
-clear
-
-# Exits the shell
-exit
-
-# Saves all your shell activity in a log file
+cd - change directory
+ls - list content
+pwd - print working directory
+touch - creates a new file
+clear - clears the screen
+exit - exits out of the shell
 script [logname] - saves all your shell activity in a log file
-
-# Shows commands that were executed
-history
-
-# Clears the history
-history -c
-
-
+history - shows commands that were executed; -c clears history
 cp - copies a file / directory
 cp -rv [path]/* [destination_path]/ - copies content of a folder in another folder
 vi - opens Vi text editor; also creates a new file
@@ -97,17 +77,20 @@ yum upgrade - updates all outdated packages while removing older versions
 ```
 
 
-=====Access Control List=====
+## Access Control List
 
+```bash
 1) setfacl -m u:user:rwx /path/to/file - add permission for user
 2) setfacl -m g:group:rwx /path/to/file - add permission for group
 3) setfacl -Rm "entry" /path/to/file - allow all files or directories to inherit ACL entries from the directory it is within
 4) setfacl -x u:user /path/to/file - remove a specific entry
 5) setfacl -b path/to/file - remove all entries
 6) getfacl - gets ACL info on file
+```
 
-=====System Administration=====
+## System Administration
 
+```bash
 vi - openes Vi text editor
 	i - insert
 	Esc - escapes any mode
@@ -184,9 +167,11 @@ rsync -zvh [file] [destination] - transfer a file using rsync on the local machi
 rsync -azvh [folder] [destination] - transfer a folder using rsync on the local machine
 rsync -avz [file] [user@ip:[location]] - transfer a file to a remote machine
 rsync -rzv -e 'ssh -p [port]' --progress [file] [user@ip:[location]] - transfer a file to / from a remote machine specifying the port
+```
 
-=====User Account Management=====
+## User Account Management
 
+```bash
 useradd [username] - adds a new user
 groupadd [groupname] - adds a new group
 userdel [username] - deletes a user; -r - deletes the home/[username] folder
@@ -201,9 +186,11 @@ last - shows all users that have logged in that system since the beginning
 w - more detail than who
 pinky - print user information
 id [username] - identifies if the user exists
+```
 
-=====Crontab=====
+## Crontab
 
+```bash
 crontab  - [-e edit] [-l list] [-r remove] [crond - cron daemon]
 [minute (0 - 59)] [hour (0 - 23)] [day of the month (1-31)] [month (1-12)] [day of the week (0 - 6)] <command to execute> - crontab table columns
 at - program a task to run only once
@@ -216,9 +203,11 @@ at 10:00AM next month - schedule a job to 10AM next month
 atq - displays all at entries
 atrm # - removes an at entry based on the number added
 atd - at daemon
+```
 
-=====Process Management=====
+## Process Management
 
+```bash
 Ctrl + Z - pauses / stops a running process
 jobs - shows all processes running or paused in the bash shell
 bg - starts the process in the background
@@ -235,9 +224,11 @@ sysctl - view, set and manage kernel parameters
 sysctl -a - displays all kernel parameters
 sysctl -w [parameter_name]=[value] - temporarily modifies a parameter
 sysctl -p - makes the modifications persistent
+```
 
-=====System Monitoring=====
+## System Monitoring
 
+```bash
 top - Linux Task Manager
 df - shows available space (common usage: df -h | sort -r)
 du - shows used space (common usage: du -sh * | sort -hr)
@@ -245,9 +236,11 @@ dmesg - displays boot information and error messages
 iostat 1 - displays usage information on CPU and storage devices
 netstat - displays network information (-rnv)
 free - displays available and used RAM and Swap memory
+```
 
-=====Disk Management=====
+## Disk Management
 
+```bash
 df - outputs the amount of available disk space (-h - human readable; -i - inodes; -t [type] - displays the partitions of [type] type; -T - displays all partitions and their filesystem
 cfdisk - fdisk with GUI - partition manager
 fdisk -l - shows info about the partitions available
@@ -277,9 +270,11 @@ fsck - for ext2, ext3, ext4 - check and repair utility; should be executed on an
 xfs_repair - for xfs filesystem - check and repair utility
 dd if=[source_path] of=[destination_path] - backup drives / partitions
 dd if=[/root/sd[x]1.img] of=/dev/sd[y] - restore from backup
+```
 
-===fsck Exit Codes===
+## fsck Exit Codes
 
+```bash
 0 - no errors
 1 - filesystem eroors corrected
 2 - system should be rebooted
@@ -288,17 +283,22 @@ dd if=[/root/sd[x]1.img] of=/dev/sd[y] - restore from backup
 16 - usage or syntax error
 32 - fsck canceled by user request
 128 - shared library error
+```
 
-===Create Swap Partition===
+## Create Swap Partition===
 
+```bash
 dd if=/dev/zero of=/[name_of_new_swap] bs=1M count=1024 - allocates space for new swap partition
 chmod go-r [name_of_new_swap] - remove read permissions for group and others 
 mkswap /[name_of_new_swap] - create swap partition
 swapon /[name_of_new_swap] - extends the swap memory
 swapoff /[name_of_new_swap] - removes the added swap
 /etc/fstab - /[name_of_new_swap]	swap	swap	defaults	0	0
+```
 
-===Advanced Storage Using Stratis===
+## Advanced Storage Using Stratis
+
+```bash
 yum/dnf install stratis-cli stratisd
 systemctl enable stratisd - enable Stratis Daemon
 systemctl start stratisd - starts the Stratis Daemon
@@ -313,6 +313,7 @@ mkdir /bigdata - create a directory for mount point
 mount /dev/stratis/pool1/fs1 /bigdata - mount the filesystem to the bigdata file
 stratis filesystem snapshot pool1 fs1 [snapshot_name] - create a snapshot
 UUID="[UUID_Code]" /bigdata xfs defaults,x-systemd.requires=stratisd.service	0	0 - add entry to /etc/fstab to mount at boot
+```
 
 =====System Run Levels=====
 
