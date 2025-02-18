@@ -2,7 +2,7 @@
 title: linux
 description: 
 published: true
-date: 2025-02-18T11:06:39.786Z
+date: 2025-02-18T11:31:44.312Z
 tags: 
 editor: markdown
 dateCreated: 2025-02-15T20:11:21.990Z
@@ -315,8 +315,9 @@ stratis filesystem snapshot pool1 fs1 [snapshot_name] - create a snapshot
 UUID="[UUID_Code]" /bigdata xfs defaults,x-systemd.requires=stratisd.service	0	0 - add entry to /etc/fstab to mount at boot
 ```
 
-=====System Run Levels=====
+## System Run Levels
 
+```bash
 init 0 - shutdown or halt the system
 init 1 - single user mode; usually aliased with s or S
 init 2 - multiuser mode without networking
@@ -324,8 +325,9 @@ init 3 - multiuser mode with networking
 init 4 - not defined
 init 5 - multiuser mode with networking and GUI
 init 6 - reboot the system
+```
 
-=====Custom=====
+## Custom
 
 strace -e open [command] - shows what file is accessed when executing a command
 su - switch user (to change user to root run su -)
