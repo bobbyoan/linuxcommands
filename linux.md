@@ -1,14 +1,47 @@
+---
+title: linux
+description: 
+published: true
+date: 2025-02-18T09:17:18.970Z
+tags: 
+editor: markdown
+dateCreated: 2025-02-15T20:11:21.990Z
+---
 
-=====Fundamentals=====
 
-cd - change directory
-ls - list content
-pwd - print working directory
-touch - creates a new file
-clear - clears the screen
-exit - exits out of the shell
+# Linux Commands
+
+## Fundamentals
+
+```bash
+# Change Directory
+cd
+
+# List Content
+ls
+
+# Print Working Directory
+pwd
+
+# Creates a New File
+touch
+
+# Clears the screen
+clear
+
+# Exits the shell
+exit
+
+# Saves all your shell activity in a log file
 script [logname] - saves all your shell activity in a log file
-history - shows commands that were executed; -c clears history
+
+# Shows commands that were executed
+history
+
+# Clears the history
+history -c
+
+
 cp - copies a file / directory
 cp -rv [path]/* [destination_path]/ - copies content of a folder in another folder
 vi - opens Vi text editor; also creates a new file
@@ -61,7 +94,7 @@ yum install [package] - installs a package
 yum remove [package] - removes a package
 yum update - updates all outdated packages while keeping the old versions
 yum upgrade - updates all outdated packages while removing older versions
-
+```
 
 
 =====Access Control List=====
