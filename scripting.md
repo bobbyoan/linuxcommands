@@ -1,41 +1,56 @@
-=====Scripting=====
+---
+title: scripting
+description: 
+published: true
+date: 2025-02-18T10:12:47.381Z
+tags: 
+editor: markdown
+dateCreated: 2025-02-15T20:11:31.137Z
+---
 
+# Linux BASH Scripting
+
+## General
+
+```bash
 '#!/bin/bash' - shebang; indicates the start of a script file
 echo - outputs text to the terminal
 755 - permisions for the script files
 a= - this is how to define variables
 $a - this is how to output variables
 read [variable] - reads user input and stores it in the variable
+```
 
-===If Statement===
+## If Statement
 
+```bash
 if [condition]; then
 	echo [text]
 else
 	echo [text]
 fi
+```
 
-===End of If Statement===
+## For Statement
 
-===For Statement===
-
+```bash
 for i in [range]; do
 	echo [text]
 done
+```
 
-===End of For Loop===
+## While Loop
 
-===While Loop===
-
+```bash
 count=1
 while [count -le 3]; do
 	echo ["Number: " $i]
 done
+```
 
-===End of While Loop===
+## Case Statement
 
-===Case Statement===
-
+```bash
 case <variable> in
     <pattern1>)
         # commands for pattern1
@@ -48,45 +63,46 @@ case <variable> in
         # default commands
         ;;
 esac
+```
 
-===End of Case Statement===
+## Functions
 
-===Functions===
+```bash
 greet(){
 	echo "Hello, $1!"
 }
 greet "Bob"
 
 In this case $1 represents the first parameter passed to the function
+```
 
-===End of Functions===
+## Operators
 
-=====Operators=====
+### String Comparison Operators
 
-===String Comparison Operators===
-
+```bash
 = - checks if two strings are equal
 != - checks if two strings are not equal
 < - checks if one string is less than another (lexicographically)
 > - checks if one string is greater than another (lexicographically)
 -n - checks if the string length is non-zero
 -z - checks if the string length is zero
+```
 
-===End of String Comparison Operators===
+### Numeric Comparison Operators
 
-===Numeric Comparison Operators===
-
+```bash
 -eq - checks if two numbers are equal
 -ne - checks if two numbers are not equal
 -lt - checks if one number is less than another
 -le - checks if one number is less than or equal than another
 -gt - checks if one number is greater than another
 -ge - checks if one number is greater than or equal than another
+```
 
-===End of Numeric Comparison Operators===
+### File Comparison Operators===
 
-===File Comparison Operators===
-
+```bash
 -e - checks if the file exists
 -f - checks if the file exists and is a regular file
 -d - checks if the directory exists
@@ -96,20 +112,17 @@ In this case $1 represents the first parameter passed to the function
 -s - checks if the file is not empty
 -nt - checks if one file is newer than the other
 -ot - checks if one file is older than the other
+```
 
-===End of File Comparison Operators===
+### Logical Operators
 
-===Logical Operators===
-
+```bash
 && - logical AND
 || - logical OR
 ! - logical NOT
-
-===End of Logical Operators===
+```
 
 You can combine multiple conditions using -a (AND) and -o (OR) within the same [ ... ] or [[ ... ]] blocks.
 Use double square brackets [[ ... ]] for conditional expressions: It provides more features and fewer pitfalls compared to single square brackets [ ... ].
 Quote variables: Always quote your variables to prevent word splitting and globbing issues.
 Use spaces: Ensure spaces around the brackets and operators for correct parsing.
-
-=====End of Scripting=====
