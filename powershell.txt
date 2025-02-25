@@ -1,13 +1,3 @@
----
-title: powershell
-description: 
-published: true
-date: 2025-02-15T20:11:28.403Z
-tags: 
-editor: markdown
-dateCreated: 2025-02-15T20:11:26.954Z
----
-
 # Comprehensive List of PowerShell Commands
 
 ## General Commands
